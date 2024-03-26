@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos de Computador</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="icone-de-controle.png" type="image/x-icon">
+</head>
+<article>
+    <body>
+        <div>
+            <div class="descricao">
+                <h1>Bem-vindo, esperamos que se divirta!</h1>
+                <h2>Selecione o jogo que desejar e é só jogar!</h2>
+         </div>
+            <div class="jogos">
+                <h3>Snake</h3>
+
+                    <p>O jogo clássico que marcou gerações, mas aogora com aprimoramentos de design e novas opções de jogatina! 
+            <br><a href="Snake.html">Jogue agora</a>
+        </p>
+
+                <h3>Jogo da Velha</h3>
+
+                    <p>Aquele velho jogo que nós jogávamos com a galera em todo lugar, só bastava um papel e caneta. Agora, na versão remasterizada, pode-se jogar de 2 players no mesmo aparelho, online ou contra a máquina, será que consegue vencer?
+            <br><a href="JogodaVelha.html">Jogue agora</a>
+        </p>
+
+                <h3>Flappy Bird</h3>
+
+                    <p>Outro clássico que deixou suas marcas no tempo (e também raiva nos jogadores) essa versão esta mais bonita e com coisas novas, venha descobrir 
+            <br><a href="FlappyB.html">Jogue agora</a>
+        </p>
+    </div>
+</div> 
+Claro! Vou criar uma versão simples em HTML de um simulador de planetas. Aqui está um exemplo básico usando HTML5 Canvas e JavaScript para desenhar e animar os planetas:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planet Simulation</title>
+<style>
+    canvas {
+        border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="800"></canvas>
+
+<script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const planets = [
+        { x: 400, y: 400, radius: 30, color: 'yellow', mass: 1.98892 * Math.pow(10, 30), x_vel: 0, y_vel: 0 },
+        { x: 300, y: 400, radius: 16, color: 'blue', mass: 5.9742 * Math.pow(10, 24), x_vel: 0, y_vel: -29.783 * 1000 },
+        { x: 200, y: 400, radius: 12, color: 'red', mass: 6.39 * Math.pow(10, 23), x_vel: 0, y_vel: -24.077 * 1000 },
+        { x: 500, y: 400, radius: 8, color: 'gray', mass: 3.30 * Math.pow(10, 23), x_vel: 0, y_vel: 47.4 * 1000 },
+        { x: 600, y: 400, radius: 14, color: 'white', mass: 4.8685 * Math.pow(10, 24), x_vel: 0, y_vel: 35.02 * 1000 }
+    ];
+
+    function drawPlanet(x, y, radius, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function updatePositions() {
+        planets.forEach(planet => {
+            let total_fx = 0, total_fy = 0;
+            planets.forEach(other => {
+                if (planet !== other) {
+                    const distance_x = other.x - planet.x;
+                    const distance_y = other.y - planet.y;
+                    const distance = Math.sqrt(distance_x ** 2 + distance_y ** 2);
+                    const force = 6.67428e-11 * planet.mass * other.mass / distance ** 2;
+                    const theta = Math.atan2(distance_y, distance_x);
+                    const force_x = Math.cos(theta) * force;
+                    const force_y = Math.sin(theta) * force;
+                    total_fx += force_x;
+                    total_fy += force_y;
+                }
+            });
+            planet.x_vel += total_fx / planet.mass * 3600 * 24;
+            planet.y_vel += total_fy / planet.mass * 3600 * 24;
+            planet.x += planet.x_vel * 3600 * 24;
+            planet.y += planet.y_vel * 3600 * 24;
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        planets.forEach(planet => drawPlanet(planet.x, planet.y, planet.radius, planet.color));
+    }
+
+    function animate() {
+        updatePositions();
+        draw();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+</body>
+</html>
+```
+
+Este código HTML cria um canvas e desenha os planetas nele. A função `updatePositions()` é responsável por calcular as novas posições dos planetas com base nas forças gravitacionais entre eles. A função `draw()` desenha os planetas atualizados no canvas. A animação é realizada chamando a função `animate()` repetidamente usando `requestAnimationFrame()`.
+</body>
+</article>
+</html>
